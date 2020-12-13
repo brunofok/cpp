@@ -1,4 +1,5 @@
 #include <iostream>
+#include <functional>
 
 using namespace std;
 
@@ -53,13 +54,14 @@ void print_node(const Node * node)
         cout << "node: " << node->name << endl;
 }
 
-void walk(Node * start)
+void walk(Node * start, std::function<void(Node *)> function)
 {
     Node * node = start;
 
     while(node != nullptr)
     {
-        print_node(node);
+        if (function)
+            function(node);
         node = node->next;
     }
 }
@@ -80,7 +82,7 @@ int main()
     }
 
     cout << "walk:" << endl;
-    walk(L->head);
+    walk(L->head, print_node);
 
     return 1;
 }
