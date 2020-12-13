@@ -41,10 +41,20 @@ struct List
 
     }
     
-    private:
     int size()
     {
-        return 0;
+        if (head == nullptr)
+            return 0;
+
+        int i = 1;
+        Node * walk = head;
+        while(walk->next != nullptr)
+        {
+            walk = walk->next;
+            i++;
+        }
+
+        return i;
     }
 };
 
@@ -54,7 +64,7 @@ void print_node(const Node * node)
         cout << "node: " << node->name << endl;
 }
 
-void walk(Node * start, std::function<void(Node *)> function)
+void walk(Node * start, std::function<void(Node *)> function = {})
 {
     Node * node = start;
 
@@ -66,13 +76,20 @@ void walk(Node * start, std::function<void(Node *)> function)
     }
 }
 
-int main()
+int main(int argc, char * argv[])
 {
     cout << "Hello world!" << endl;
 
+    if (argc < 2)
+    {
+        cout << "Invalid parameters. Please provide the size of a list" << endl;
+        return 0;
+    }
+    const int limit = atoi(argv[1]);
+
     List * L = new List;
     
-    for (int i=0; i<10; i++)
+    for (int i=0; i<limit; i++)
     {
         Node * node = new Node;
         node->id = i;
@@ -82,7 +99,8 @@ int main()
     }
 
     cout << "walk:" << endl;
-    walk(L->head, print_node);
+    walk(L->head);
+    cout << "list size: " + to_string(L->size()) << endl;
 
     return 1;
 }
