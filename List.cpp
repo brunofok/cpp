@@ -27,20 +27,16 @@ struct List
 
     void Append(Node& node)
     {
+        this->limit++;
         if (head == nullptr)
         {
             head = &node;
+            last = &node;
             return;
         }
-        
-        Node * walk = head;
-        while(walk->next != nullptr)
-        {
-            walk = walk->next;
-        }
 
-        walk->next = &node;
-        this->limit++;
+        last->next = &node;
+        last = &node;
     }
     
     int size()
@@ -90,7 +86,7 @@ int main(int argc, char * argv[])
     }
 
     cout << "walk:" << endl;
-    walk(L->head);
+    walk(L->head, print_node);
     cout << "list size: " + to_string(L->size()) << endl;
 
     return 1;
