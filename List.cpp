@@ -44,6 +44,21 @@ struct List
         return true;
     }
 
+    bool DeleteNext(Node * node)
+    {
+        if (node == nullptr && node->next != nullptr)
+            return false;
+
+        Node * next = node->next;
+
+        node->next = node->next->next;
+        next = nullptr;
+        delete next;
+        limit--;
+        
+        return true;
+    }
+
     bool Remove(Node * node)
     {
         if (head == nullptr)
@@ -54,6 +69,8 @@ struct List
             head = head->next;
             node = nullptr;
             delete node;
+            limit--;
+            return true;
         }
 
         Node * current = head;
@@ -64,11 +81,7 @@ struct List
         {
             if (node == next)
             {
-                current->next = next->next;
-                node = nullptr;
-                delete node;
-                limit--;
-                return true;
+                return DeleteNext(current);
             }
             
             current = next;
@@ -125,7 +138,7 @@ int main(int argc, char * argv[])
     cout << "walk:" << endl;
     walk(L->head, print_node);
     cout << "list size: " + to_string(L->size()) << endl;
-    L->Remove(L->head->next->next->next->next);
+    L->Remove(L->head);
     walk(L->head, print_node);
     cout << "list size: " + to_string(L->size()) << endl;    
 
