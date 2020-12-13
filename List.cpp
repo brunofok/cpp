@@ -13,6 +13,8 @@ struct Node
 
 struct List
 {
+    int limit = 0;
+
     Node * head;
     Node * last;
 
@@ -38,23 +40,12 @@ struct List
         }
 
         walk->next = &node;
-
+        this->limit++;
     }
     
     int size()
     {
-        if (head == nullptr)
-            return 0;
-
-        int i = 1;
-        Node * walk = head;
-        while(walk->next != nullptr)
-        {
-            walk = walk->next;
-            i++;
-        }
-
-        return i;
+        return limit;
     }
 };
 
