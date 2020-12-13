@@ -43,6 +43,39 @@ struct List
 
         return true;
     }
+
+    bool Remove(Node * node)
+    {
+        if (head == nullptr)
+            return false;
+
+        if (node == head)
+        {
+            head = head->next;
+            node = nullptr;
+            delete node;
+        }
+
+        Node * current = head;
+
+        Node * next = current->next;
+
+        while(next != nullptr)
+        {
+            if (node == next)
+            {
+                current->next = next->next;
+                node = nullptr;
+                delete node;
+                limit--;
+                return true;
+            }
+            
+            current = next;
+            next = next->next;
+        }
+        return false;
+    }
     
     int size()
     {
@@ -92,6 +125,9 @@ int main(int argc, char * argv[])
     cout << "walk:" << endl;
     walk(L->head, print_node);
     cout << "list size: " + to_string(L->size()) << endl;
+    L->Remove(L->head->next->next->next->next);
+    walk(L->head, print_node);
+    cout << "list size: " + to_string(L->size()) << endl;    
 
     return 1;
 }
