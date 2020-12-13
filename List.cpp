@@ -10,6 +10,43 @@ struct Node
     Node* next = nullptr;
 };
 
+struct List
+{
+    Node * head;
+    Node * last;
+
+    public:
+
+    List()
+    {
+        head = nullptr;
+    }
+
+    void Append(Node& node)
+    {
+        if (head == nullptr)
+        {
+            head = &node;
+            return;
+        }
+        
+        Node * walk = head;
+        while(walk->next != nullptr)
+        {
+            walk = walk->next;
+        }
+
+        walk->next = &node;
+
+    }
+    
+    private:
+    int size()
+    {
+        return 0;
+    }
+};
+
 void print_node(const Node * node)
 {
     if (node != nullptr)
@@ -31,32 +68,19 @@ int main()
 {
     cout << "Hello world!" << endl;
 
-    Node * head = nullptr;
-    Node * last = nullptr;
+    List * L = new List;
     
     for (int i=0; i<10; i++)
     {
-        cout << i << endl;
         Node * node = new Node;
         node->id = i;
         node->name = "node " + to_string(i);
-        
-        if (last != nullptr)
-        {
-            last->next = node;
-            last = node;
-        }
-        else
-        {
-            last = node;
-        }
-        
-        if (i==0)
-            head = node;
+
+        L->Append(*node);
     }
 
     cout << "walk:" << endl;
-    walk(head);
+    walk(L->head);
 
     return 1;
 }
