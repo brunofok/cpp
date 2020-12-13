@@ -25,18 +25,23 @@ struct List
         head = nullptr;
     }
 
-    void Append(Node& node)
+    bool Append(Node& node)
     {
+        if (node.id < 0)
+            return false;
+
         this->limit++;
         if (head == nullptr)
         {
             head = &node;
             last = &node;
-            return;
+            return true;
         }
 
         last->next = &node;
         last = &node;
+
+        return true;
     }
     
     int size()
@@ -65,7 +70,6 @@ void walk(Node * start, std::function<void(Node *)> function = {})
 
 int main(int argc, char * argv[])
 {
-    cout << "Hello world!" << endl;
 
     if (argc < 2)
     {
