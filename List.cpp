@@ -32,22 +32,29 @@ int main()
     cout << "Hello world!" << endl;
 
     Node * head = nullptr;
-
-    Node node1;
-    node1.id = 1;
-    node1.name = "node 1";
-    head = &node1;
+    Node * last = nullptr;
     
-    Node node2;
-    node2.id = 2;
-    node2.name = "node 2";
-    node1.next = &node2;
+    for (int i=0; i<10; i++)
+    {
+        cout << i << endl;
+        Node * node = new Node;
+        node->id = i;
+        node->name = "node " + to_string(i);
+        
+        if (last != nullptr)
+        {
+            last->next = node;
+            last = node;
+        }
+        else
+        {
+            last = node;
+        }
+        
+        if (i==0)
+            head = node;
+    }
 
-    Node node3;
-    node3.id = 3;
-    node3.name = "node 3";    
-    node2.next = &node3;
-    
     cout << "walk:" << endl;
     walk(head);
 
